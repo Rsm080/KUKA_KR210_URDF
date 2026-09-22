@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kuka_kr210">
+  <xacro:arg name="controllers_file" default=""/>
+
+  <!--
+    Gazebo-ready version of the supplied KUKA KR210 model. The archive does
+    not contain mass properties or meshes for Link_4 and Link_7.
+    Mesh-link inertias below are stable box approximations; links without a
+    mesh are represented by lightweight inertial frames.
+  -->
+  <material name="kuka_orange">
+    <color rgba="1.0 0.32 0.0 1"/>
+  </material>
+
+  <xacro:macro name="mesh_link" params="name mesh mass com inertial_rpy ixx iyy izz visual_xyz visual_rpy collision_center collision_rpy collision_size">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="${com}" rpy="${inertial_rpy}"/>
+        <mass value="${mass}"/>
+        <inertia ixx="${ixx}" ixy="0" ixz="0" iyy="${iyy}" iyz="0" izz="${izz}"/>
+      </inertial>
+      <visual>
+        <origin xyz="${visual_xyz}" rpy="${visual_rpy}"/>
+        <geometry>
+          <mesh filename="package://robot_gazebo_sim/meshes/kuka_kr210/${mesh}"/>
+        </geometry>
+        <material name="kuka_orange"/>
+      </visual>
+      <!-- Convex boxes are considerably lighter to simulate than the CAD meshes. -->
+      <collision>
+        <origin xyz="${collision_center}" rpy="${collision_rpy}"/>
+        <geometry>
+          <box size="${collision_size}"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <xacro:macro name="frame_link" params="name">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+      </inertial>
+    </link>
+  </xacro:macro>
+
+  <link name="world"/>
+  <xacro:mesh_link
+    name="base_link" mesh="base_link.stl" mass="68.698"
+    com="-0.0687525 0 0.1735"
+    inertial_rpy="0 0 0" visual_xyz="0 0 0" visual_rpy="0 0 0"
+    ixx="3.943981" iyy="5.219836" izz="7.785174"
+    collision_center="-0.0687525 0 0.1735" collision_rpy="0 0 0"
+    collision_size="0.889595 0.754 0.347"/>
+  <xacro:mesh_link
+    name="Link_1" mesh="Link_1.stl" mass="68.130"
+    com="-0.00363964 -0.06987561 0.52673331"
+    inertial_rpy="0 0 0" visual_xyz="0 0 0" visual_rpy="0 0 0"
+    ixx="4.300515" iyy="8.172721" izz="8.354487"
+    collision_center="-0.00363964 -0.06987561 0.52673331" collision_rpy="0 0 0"
+    collision_size="1.037674 0.628284 0.602267"/>
+  <xacro:mesh_link
+    name="Link_2" mesh="Link_2.stl" mass="89.151"
+    com="0.56351983 0.0299634083 0.193108681"
+    inertial_rpy="-1.57059265 -0.000203673201 -1.57079637"
+    visual_xyz="-0.414999978 0.329999993 -0.000151738025"
+    visual_rpy="-1.57059265 -0.000203673201 -1.57079637"
+    ixx="18.451121" iyy="18.856859" izz="3.076940"
+    collision_center="0.56351983 0.0299634083 0.193108681"
+    collision_rpy="-1.57059265 -0.000203673201 -1.57079637"
+    collision_size="0.484138 0.424 1.517828"/>
+  <xacro:mesh_link
+    name="Link_3" mesh="Link_3.stl" mass="39.981"
+    com="0.258669603 0.0591281353 0.06456371"
+    inertial_rpy="0 0 1.571"
+    visual_xyz="0.000234224184 -1.14999998 0" visual_rpy="0 0 1.571"
+    ixx="6.319562" iyy="1.722436" izz="5.652142"
+    collision_center="0.258669603 0.0591281353 0.06456371" collision_rpy="0 0 1.571"
+    collision_size="0.397904 1.240210 0.598873"/>
+  <xacro:frame_link name="Link_4"/>
+  <xacro:mesh_link
+    name="Link_5" mesh="Link_5.stl" mass="5.049"
+    com="-0.00017932 0 0.20951163"
+    inertial_rpy="0 0 0" visual_xyz="0 0 0" visual_rpy="0 0 0"
+    ixx="0.099203" iyy="0.099203" izz="0.034337"
+    collision_center="-0.00017932 0 0.20951163" collision_rpy="0 0 0"
+    collision_size="0.202 0.202 0.441556"/>
+  <xacro:mesh_link
+    name="Link_6" mesh="Link_6.stl" mass="6.825"
+    com="0.0467073814 0 -0.0222431873"
+    inertial_rpy="0 1.57059265 0"
+    visual_xyz="-0.339999993 0 -0.0000692501098" visual_rpy="0 1.57059265 0"
+    ixx="0.077324" iyy="0.100449" izz="0.073291"
+    collision_center="0.0467073814 0 -0.0222431873" collision_rpy="0 1.57059265 0"
+    collision_size="0.291131 0.21 0.303064"/>
+  <xacro:frame_link name="Link_7"/>
+
+  <joint name="Joint_0" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="Joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child link="Link_1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159" effort="1000" velocity="1"/>
+    <dynamics damping="20" friction="1"/>
+  </joint>
+  <joint name="Joint_2" type="revolute">
+    <parent link="Link_1"/>
+    <child link="Link_2"/>
+    <origin xyz="0.33 0 0.645" rpy="0 -1.57059265 1.571"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159" effort="1000" velocity="1"/>
+    <dynamics damping="20" friction="1"/>
+  </joint>
+  <joint name="Joint_3" type="revolute">
+    <parent link="Link_2"/>
+    <child link="Link_3"/>
+    <origin xyz="1.15 0 0" rpy="0 0 -1.571"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159" effort="1000" velocity="1"/>
+    <dynamics damping="20" friction="1"/>
+  </joint>
+  <joint name="Joint_4" type="revolute">
+    <parent link="Link_3"/>
+    <child link="Link_4"/>
+    <origin xyz="0.88 0.115 0" rpy="0 1.5706 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159" effort="1000" velocity="1"/>
+    <dynamics damping="10" friction="0.5"/>
+  </joint>
+  <joint name="Joint_5" type="revolute">
+    <parent link="Link_4"/>
+    <child link="Link_5"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159" effort="500" velocity="1"/>
+    <dynamics damping="5" friction="0.2"/>
+  </joint>
+  <joint name="Joint_6" type="revolute">
+    <parent link="Link_5"/>
+    <child link="Link_6"/>
+    <origin xyz="0 0 0.34" rpy="0 -1.57059265 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159" effort="500" velocity="1"/>
+    <dynamics damping="5" friction="0.2"/>
+  </joint>
+  <joint name="Link_6_to_Link_7" type="fixed">
+    <parent link="Link_6"/>
+    <child link="Link_7"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <xacro:macro name="controlled_joint" params="name">
+      <joint name="${name}">
+        <command_interface name="position">
+          <param name="min">-3.14159</param>
+          <param name="max">3.14159</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </xacro:macro>
+    <xacro:controlled_joint name="Joint_1"/>
+    <xacro:controlled_joint name="Joint_2"/>
+    <xacro:controlled_joint name="Joint_3"/>
+    <xacro:controlled_joint name="Joint_4"/>
+    <xacro:controlled_joint name="Joint_5"/>
+    <xacro:controlled_joint name="Joint_6"/>
+  </ros2_control>
+
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(arg controllers_file)</parameters>
+    </plugin>
+  </gazebo>
+</robot>

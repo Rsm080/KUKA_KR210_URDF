@@ -1,0 +1,50 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/jsm/robot_gazebo_sim/build/robot_gazebo_sim
+-- Install configuration: ""
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/config
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/config/controllers.yaml
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/launch
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/launch/gazebo.launch.py
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/meshes
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/meshes/Link_6.stl
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/meshes/Link_5.stl
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/meshes/Link_2.stl
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/meshes/Link_3.stl
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/meshes/Link_4.stl
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/meshes/Link_1.stl
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/urdf
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/urdf/robot.gazebo.urdf.xacro
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/urdf/robot.urdf
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/worlds
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/worlds/empty.world
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/lib/robot_gazebo_sim/gazebo_joint_demo
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/ament_index/resource_index/package_run_dependencies/robot_gazebo_sim
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/ament_index/resource_index/parent_prefix_path/robot_gazebo_sim
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/environment/ament_prefix_path.sh
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/environment/ament_prefix_path.dsv
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/environment/path.sh
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/environment/path.dsv
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/local_setup.bash
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/local_setup.sh
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/local_setup.zsh
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/local_setup.dsv
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/package.dsv
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/ament_index/resource_index/packages/robot_gazebo_sim
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/cmake/robot_gazebo_simConfig.cmake
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/cmake/robot_gazebo_simConfig-version.cmake
+-- Installing: /home/jsm/robot_gazebo_sim/install/robot_gazebo_sim/share/robot_gazebo_sim/package.xml

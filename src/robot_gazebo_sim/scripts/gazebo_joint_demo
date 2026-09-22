@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+"""Send a conservative demonstration trajectory to the Gazebo arm controller."""
+
+import sys
+
+from builtin_interfaces.msg import Duration
+from control_msgs.action import FollowJointTrajectory
+import rclpy
+from rclpy.action import ActionClient
+from rclpy.node import Node
+from trajectory_msgs.msg import JointTrajectoryPoint
+
+
+JOINTS = [f"Joint_{index}" for index in range(1, 7)]
+
+
+def point(positions, seconds):
+    result = JointTrajectoryPoint()
+    result.positions = [float(value) for value in positions]
+    result.time_from_start = Duration(sec=int(seconds))
+    return result
+
+
+class GazeboJointDemo(Node):
+    def __init__(self):
+        super().__init__("gazebo_joint_demo")
+        self._client = ActionClient(
+            self,
+            FollowJointTrajectory,
+            "/arm_controller/follow_joint_trajectory",
+        )
+
+    def run(self):
+        self.get_logger().info("Waiting for arm_controller...")
+        if not self._client.wait_for_server(timeout_sec=30.0):
+            self.get_logger().error("arm_controller action server was not available")
+            return 1
+
+        goal = FollowJointTrajectory.Goal()
+        goal.trajectory.joint_names = JOINTS
+        goal.trajectory.points = [
+            point([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 2),
+            point([2.0, 0.0, 0.0, 0.0, 0.0, 0.0], 4),
+            point([-2.0, 0.0, 0.0, 0.0, 0.0, 0.0], 6),
+            point([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 8),
+            point([0.0, 2.0, 0.0, 0.0, 0.0, 0.0], 10),
+            point([0.0, -2.0, 0.0, 0.0, 0.0, 0.0], 12),
+            point([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 14),
+            point([0.0, 0.0, 2.0, 0.0, 0.0, 0.0], 16),
+            point([0.0, 0.0, -2.0, 0.0, 0.0, 0.0], 18),
+            point([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 20),
+            point([0.0, 0.0, 0.0, 2.0, 0.0, 0.0], 22),
+            point([0.0, 0.0, 0.0, -2.0, 0.0, 0.0], 24),
+            point([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 26),
+            point([0.0, 0.0, 0.0, 0.0, 2.0, 0.0], 28),
+            point([0.0, 0.0, 0.0, 0.0, -2.0, 0.0], 30),
+            point([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 32),
+            point([0.0, 0.0, 0.0, 0.0, 0.0, 2.0], 34),
+            point([0.0, 0.0, 0.0, 0.0, 0.0, -2.0], 36),
+            point([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 38),
+        ]
+
+        self.get_logger().info("Sending six-joint demonstration trajectory")
+        goal_future = self._client.send_goal_async(goal)
+        rclpy.spin_until_future_complete(self, goal_future)
+        goal_handle = goal_future.result()
+        if goal_handle is None or not goal_handle.accepted:
+            self.get_logger().error("Trajectory goal was rejected")
+            return 2
+
+        result_future = goal_handle.get_result_async()
+        rclpy.spin_until_future_complete(self, result_future)
+        result = result_future.result()
+        if result is None:
+            self.get_logger().error("No trajectory result was returned")
+            return 3
+
+        error_code = result.result.error_code
+        if error_code != FollowJointTrajectory.Result.SUCCESSFUL:
+            self.get_logger().error(
+                f"Trajectory failed with code {error_code}: {result.result.error_string}"
+            )
+            return 4
+
+        self.get_logger().info("Demonstration trajectory completed")
+        return 0
+
+
+def main():
+    rclpy.init()
+    node = GazeboJointDemo()
+    try:
+        return_code = node.run()
+    except KeyboardInterrupt:
+        return_code = 130
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+    return return_code
+
+
+if __name__ == "__main__":
+    sys.exit(main())
